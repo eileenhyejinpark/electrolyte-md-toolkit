@@ -55,6 +55,27 @@ mixture representing a minority "ion" species in a majority "solvent."
 
 Full walkthrough with code: [`examples/demo_electrolyte/analysis_demo.ipynb`](examples/demo_electrolyte/analysis_demo.ipynb)
 
+## Results (TIP3P electrolyte system)
+
+A more realistic system: TIP3P water + Na⁺/Cl⁻ ions (Joung-Cheatham
+parameters), PPPM long-range electrostatics, rigid-body water dynamics via
+`fix rigid/nvt/small`, thermostatted at 300 K.
+
+![Ion-water RDF](examples/demo_tip3p_electrolyte/ion_water_rdf.png)
+
+| Property | Value |
+|---|---|
+| Na⁺-O(water) first shell peak | r = 3.08 Å |
+| Cl⁻-O(water) first shell peak | r = 5.24 Å |
+
+Coordination numbers were not reliably extractable from this system (only 5
+ions of each species, 5 ps of production dynamics — see the analysis
+notebook for a full discussion of why). The RDF peaks themselves are robust
+across repeated analysis and correctly show Cl⁻'s hydration shell sitting
+farther out than Na⁺'s, consistent with expected trends.
+
+Full walkthrough: [`examples/demo_tip3p_electrolyte/analysis_demo.ipynb`](examples/demo_tip3p_electrolyte/analysis_demo.ipynb)
+
 ## Setup
 
 ```bash

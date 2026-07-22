@@ -1,0 +1,64 @@
+# TIP3P water + Na+/Cl- electrolyte demo
+
+units       real
+atom_style  full
+boundary    p p p
+
+special_bonds lj/coul 0.0 0.0 0.0
+
+region      simbox block 0 24 0 24 0 24
+create_box  4 simbox &
+            bond/types 1 &
+            angle/types 1 &
+            extra/bond/per/atom 2 &
+            extra/angle/per/atom 1 &
+            extra/special/per/atom 2
+
+molecule    watermol tip3p.mol
+
+create_atoms 0 random 250 34564 simbox mol watermol 25367 overlap 2.0
+create_atoms 3 random 5 87287 simbox overlap 2.0
+create_atoms 4 random 5 22222 simbox overlap 2.0
+
+mass 1 15.9994
+mass 2 1.008
+mass 3 22.98977
+mass 4 35.453
+
+bond_style   zero
+bond_coeff   1 0.9572
+
+angle_style  zero
+angle_coeff  1 104.52
+
+pair_style   lj/cut/coul/long 10.0
+pair_modify  mix arithmetic
+pair_coeff   1 1 0.1521 3.1507
+pair_coeff   2 2 0.0000 0.0000
+pair_coeff   3 3 0.3526418 2.15095
+pair_coeff   4 4 0.0127850 4.83304
+
+kspace_style pppm 1.0e-4
+
+group        water_mols type 1 2
+group        ions type 3 4
+
+fix          rigidwater water_mols rigid/nvt/small molecule temp 300.0 300.0 100.0
+fix          nve_ions ions nve
+fix          langevin_ions ions langevin 300.0 300.0 100.0 48279
+
+velocity     all create 300.0 12345 dist gaussian
+
+reset_timestep 0
+timestep     0.1
+thermo       50
+thermo_style custom step temp press pe
+run          1000
+
+timestep     1.0
+thermo       100
+
+dump         1 all custom 200 dump.tip3p_electrolyte.lammpstrj id type x y z
+dump_modify  1 sort id
+
+run          5000
