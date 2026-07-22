@@ -114,7 +114,7 @@ D = diffusion_coefficient(msd, timestep=frame_dt, dim=3)
 ## Roadmap
 
 - [x] Unit tests validating each module against known synthetic data
-- [ ] Extend to realistic electrolyte force fields (e.g., TIP3P water + Na⁺/Cl⁻)
+- [x] Extend to realistic electrolyte force fields (e.g., TIP3P water + Na⁺/Cl⁻)
       with literature-parameterized pair potentials
 
 ## License
