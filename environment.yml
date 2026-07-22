@@ -1,0 +1,13 @@
+name: electrolyte-portfolio
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - numpy
+  - scipy
+  - matplotlib
+  - pandas
+  - jupyter
+  - mdanalysis
+  - lammps
